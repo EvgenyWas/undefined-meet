@@ -1,0 +1,31 @@
+{
+  "name": "undefined-meet",
+  "version": "1.0.0",
+  "description": "Undefined meet for O(n) friends",
+  "main": "index.js",
+  "scripts": {
+    "start:web": "pnpm -F ./web dev",
+    "start:server": "pnpm -F ./server dev",
+    "start": "pnpm --recursive dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EvgenyWas/undefined-meet.git"
+  },
+  "keywords": [
+    "jitsi"
+  ],
+  "author": "Yauheni Vasiukevich",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EvgenyWas/undefined-meet/issues"
+  },
+  "homepage": "https://github.com/EvgenyWas/undefined-meet#readme",
+  "engines": {
+    "node": ">=22.15.0"
+  },
+  "packageManager": "pnpm@10.15.1",
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  }
+}

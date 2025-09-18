@@ -1,0 +1,47 @@
+{
+  "name": "undefined-meet-server",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Undefined Meet Server",
+  "type": "module",
+  "main": "dist/server.js",
+  "exports": {
+    ".": {
+      "import": "./dist/server.js",
+      "require": "./dist/server.cjs"
+    }
+  },
+  "imports": {
+    "undefined-meet-shared": "../shared/index.ts"
+  },
+  "scripts": {
+    "start": "dotenvx run -f ../.env -- node --import dotenv/config & tsx src/server.ts",
+    "dev": "dotenvx run -f ../.env -- tsx watch --include 'src/**/*' src/server.ts",
+    "build": "pkgroll --clean-dist --env.NODE_ENV=production"
+  },
+  "keywords": [],
+  "author": "Yauheni Vasiukevich",
+  "license": "ISC",
+  "packageManager": "pnpm@10.15.1",
+  "dependencies": {
+    "@dotenvx/dotenvx": "^1.49.0",
+    "@octokit/oauth-app": "^8.0.1",
+    "@octokit/request": "^10.0.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.1",
+    "undefined-meet-shared": "workspace:^1.0.0"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.9",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^22.15.0",
+    "pkgroll": "^2.15.4",
+    "tsx": "^4.20.5"
+  }
+}

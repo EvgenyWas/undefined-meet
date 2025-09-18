@@ -1,0 +1,18 @@
+{
+  "name": "undefined-meet-shared",
+  "version": "1.0.0",
+  "description": "Package with shared types, contracts, etc.",
+  "type": "module",
+  "main": "index.ts",
+  "exports": {
+    "import": "./index.ts"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "Yauheni Vasiukevich",
+  "license": "ISC",
+  "packageManager": "pnpm@10.15.1"
+}

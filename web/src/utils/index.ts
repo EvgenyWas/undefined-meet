@@ -1,0 +1,1 @@
+export { mapNotificationToMessage } from './mapNotificationToMessage';

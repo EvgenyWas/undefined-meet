@@ -1,0 +1,33 @@
+.wrapper {
+  padding: 24px;
+}
+
+.logo {
+  max-width: 100vw;
+  width: fit-content;
+  white-space: pre;
+  line-height: 1.2;
+  font-size: 0.9vw !important;
+}
+
+.signInLink {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0 24px;
+}
+
+.footerContent {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}

@@ -1,0 +1,94 @@
+import { useEffect, useMemo } from 'react';
+import { useNavigate, useSearchParams } from 'react-router';
+import useSWRImmutable from 'swr/immutable';
+import Toastify from 'toastify-js';
+
+import GithubIcon from '@/assets/github.svg?react';
+import TypingOutText from '@/components/TypingOutText';
+import { apiEndpoints, asciiLogo, manifestItems } from '@/constants';
+import type { IApiError } from '@/types/IApiError';
+import type { IWhoAmIData } from '@/types/IWhoAmIData';
+import styles from './Home.module.css';
+import { mapNotificationToMessage } from '@/utils';
+
+const githubAuthHref = `${import.meta.env.WEB_AUTH_URL}/github`;
+
+export const Home = () => {
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { data, error, isLoading } = useSWRImmutable<IWhoAmIData, IApiError>(
+    apiEndpoints.whoAmI,
+  );
+
+  const toastInstance = useMemo(
+    () =>
+      Toastify({
+        gravity: 'top',
+        position: 'right',
+        duration: 4000,
+        stopOnFocus: true,
+        onClick() {
+          toastInstance.hideToast();
+        },
+      }),
+    [],
+  );
+
+  useEffect(() => {
+    const code = searchParams.get('notification');
+    searchParams;
+    if (!code) {
+      return;
+    }
+
+    const message = mapNotificationToMessage(code);
+    if (!message) {
+      searchParams.delete('notification');
+      return setSearchParams(searchParams, { replace: true });
+    }
+
+    toastInstance.options.text = message;
+    toastInstance.showToast();
+    searchParams.delete('notification');
+    setSearchParams(searchParams, { replace: true });
+  }, [searchParams, toastInstance]);
+
+  const hasMeetingButton = data && !error;
+
+  return (
+    <div className={styles.wrapper}>
+      <main>
+        <TypingOutText as="pre" text={asciiLogo} className={styles.logo} />
+
+        <ul>
+          {manifestItems.map((item) => (
+            <TypingOutText key={item} as="li" text={item} />
+          ))}
+        </ul>
+
+        {isLoading ? null : hasMeetingButton ? (
+          <button onClick={() => navigate('/room')}>Join meeting</button>
+        ) : (
+          <a href={githubAuthHref} className={styles.signInLink}>
+            Sign in
+            <GithubIcon height={20} />
+          </a>
+        )}
+      </main>
+
+      <footer className={styles.footer}>
+        <hr />
+        <p className={styles.footerContent}>
+          <span>
+            Made by <a href="https://github.com/EvgenyWas">Yauheni</a>.
+          </span>
+          <span>Inspired by Undefined.</span>
+          <span>
+            Source code{' '}
+            <a href="https://github.com/EvgenyWas/undefined-meet">here</a>.
+          </span>
+        </p>
+      </footer>
+    </div>
+  );
+};
