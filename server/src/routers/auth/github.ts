@@ -20,7 +20,7 @@ type TGithubUser = Awaited<
 
 const githubUsersWhitelistPath = path.resolve(
   process.cwd(),
-  'github-whitelist.txt',
+  process.env.SERVER_GITHUB_WHITELIST_PATH,
 );
 
 const octokitOAuthApp = new OAuthApp({
@@ -100,8 +100,11 @@ authGithubRouter.get('/callback', async (req, res) => {
       sameSite: 'strict',
       maxAge: JWT_EXPIRES_IN,
     });
-    res.redirect(getWebUrlWithNotification(NOTIFICATION_CODES.AuthSuccess));
+    return res.redirect(
+      getWebUrlWithNotification(NOTIFICATION_CODES.AuthSuccess),
+    );
   } catch (error) {
+    console.error(error);
     res.redirect(getWebUrlWithNotification(NOTIFICATION_CODES.ServerError));
   }
 });

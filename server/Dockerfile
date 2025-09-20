@@ -19,4 +19,4 @@ WORKDIR /app
 COPY --from=build /app/pruned /app
 
 EXPOSE $SERVER_PORT
-CMD [ "pnpm", "dotenvx", "run", "--", "node", "dist/server.js" ]
+CMD [ "node", "dist/server.js" ]

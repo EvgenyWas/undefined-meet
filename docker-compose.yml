@@ -10,8 +10,9 @@ services:
       - WEB_PUBLIC_URL
       - SERVER_PORT
       - SERVER_URL
-      - SERVER_MORGAN_STREAM_PATH=logs.txt
+      - SERVER_MORGAN_STREAM_PATH
       - SERVER_JWT_SECRET
+      - SERVER_GITHUB_WHITELIST_PATH
       - GITHUB_CLIENT_ID
       - GITHUB_CLIENT_SECRET
       - JWT_APP_ID
@@ -20,8 +21,8 @@ services:
     ports:
       - '${SERVER_PORT}:${SERVER_PORT}'
     volumes:
-      - /srv/undefined-meet/github-whitelist.txt:/app:ro
-      - /srv/undefined-meet/server/logs.txt:/app/dist/logs.txt
+      - /srv/undefined-meet/github-whitelist.txt:/app/github-whitelist.txt:ro
+      - /srv/undefined-meet/server.log:/app/server.log
 
   # Jitsi Frontend
   web:
