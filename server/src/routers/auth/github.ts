@@ -24,7 +24,8 @@ const githubUsersWhitelistPath = path.resolve(
 );
 
 const octokitOAuthApp = new OAuthApp({
-  clientType: 'github-app',
+  clientType: 'oauth-app',
+  allowSignup: true,
   clientId: process.env.GITHUB_CLIENT_ID,
   clientSecret: process.env.GITHUB_CLIENT_SECRET,
   redirectUrl: `${process.env.SERVER_URL}${GITHUB_OAUTH_CALLBACK_PATH}`,
