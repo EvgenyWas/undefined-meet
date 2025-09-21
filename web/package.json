@@ -2,13 +2,14 @@
   "name": "undefined-meet-web",
   "private": true,
   "version": "1.0.0",
-  "description": "Undefined Meet Web",
+  "description": "Undefined Meet Web app",
   "type": "module",
   "author": "Yauheni Vasiukevich",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -2,7 +2,7 @@
   "name": "undefined-meet-server",
   "private": true,
   "version": "1.0.0",
-  "description": "Undefined Meet Server",
+  "description": "Undefined Meet Server app",
   "type": "module",
   "main": "dist/server.js",
   "exports": {
@@ -15,9 +15,10 @@
     "undefined-meet-shared": "../shared/index.ts"
   },
   "scripts": {
-    "start": "dotenvx run -f ../.env -- node --import dotenv/config & tsx src/server.ts",
+    "start": "dotenvx run -f ../.env -- tsx src/server.ts",
     "dev": "dotenvx run -f ../.env -- tsx watch --include 'src/**/*' src/server.ts",
-    "build": "pkgroll --clean-dist --env.NODE_ENV=production"
+    "build": "pkgroll --clean-dist --env.NODE_ENV=production",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [],
   "author": "Yauheni Vasiukevich",
