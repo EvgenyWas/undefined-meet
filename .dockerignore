@@ -7,3 +7,6 @@ Dockerfile
 .prettierrc
 .env
 *.md
+
+# we don't build undefined-meet-web app in Docker because it's just static files which are served via Nginx
+web/
