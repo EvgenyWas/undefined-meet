@@ -19,6 +19,7 @@ export const apiEndpoints = {
   whoAmI: '/api/users/whoami',
 };
 
+// https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-configuration/
 // https://github.com/jitsi/jitsi-meet/blob/master/config.js
 export const jitsiConfig = {
   logoClickUrl: '/',
