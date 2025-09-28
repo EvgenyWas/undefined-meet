@@ -21,18 +21,7 @@ const morganStream =
     ? fs.createWriteStream(MORGAN_PATH, 'utf8')
     : process.stdout;
 
-app.use(
-  cors({
-    origin(requestOrigin, callback) {
-      const isWeb = requestOrigin === process.env.WEB_PUBLIC_URL;
-      if (isWeb || !requestOrigin) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-  }),
-);
+app.use(cors({ origin: process.env.WEB_PUBLIC_URL }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan('common', { stream: morganStream }));

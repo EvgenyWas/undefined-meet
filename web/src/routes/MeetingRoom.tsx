@@ -23,9 +23,8 @@ export const MeetingRoom = () => {
   const hasSpinner = isLoading || error || !user;
 
   const onApiReady = (api: IJitsiMeetExternalApi) => {
-    api.on('videoConferenceLeft', () => {
-      navigate('/');
-    });
+    api.on('videoConferenceLeft', () => navigate('/'));
+    api.executeCommand('setNoiseSuppressionEnabled', { enabled: true });
   };
 
   useEffect(() => {
