@@ -7,6 +7,7 @@ interface ImportMetaEnv {
   readonly WEB_JITSI_WHITEBOARD_BASE_URL: string;
   readonly WEB_API_URL: string;
   readonly WEB_AUTH_URL: string;
+  readonly WEB_GOOGLE_APP_CLIENT_ID: string;
 }
 
 interface ImportMeta {

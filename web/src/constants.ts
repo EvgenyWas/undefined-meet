@@ -74,4 +74,9 @@ export const jitsiConfig = {
     // The user access limit to the whiteboard, introduced as a means to control the performance.
     userLimit: 5,
   },
+
+  // Enables calendar integration, depends on googleApiApplicationClientID
+  enableCalendarIntegration: true,
+  // The client id for the google APIs used for the calendar integration, youtube livestreaming, etc.
+  googleApiApplicationClientID: import.meta.env.WEB_GOOGLE_APP_CLIENT_ID,
 };
