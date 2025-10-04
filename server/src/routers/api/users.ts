@@ -2,6 +2,7 @@ import { Router } from 'express';
 import jwt from 'jsonwebtoken';
 
 import { JITSI_JWT_EXPIRES_IN, JWT_NAME } from '@/constants';
+import { logger } from '@/logger';
 import type { IJwtPayload } from '@/types/IJwtPayload';
 import { InternalServerErrorHttpError, UnauthorizedHttpError } from '@/utils';
 
@@ -17,6 +18,8 @@ apiUsersRouter.get('/whoami', (req, res) => {
   try {
     payload = jwt.verify(token, process.env.SERVER_JWT_SECRET) as IJwtPayload;
   } catch (error) {
+    logger.warn(`${req.path}: [Issue with verifying user JWT]`, error);
+
     return res.status(401).json(UnauthorizedHttpError);
   }
 
@@ -36,6 +39,8 @@ apiUsersRouter.get('/whoami', (req, res) => {
 
     return res.json({ ...payload.context.user, jitsiJwt });
   } catch (error) {
+    logger.error(`${req.path}: [Error with generating Jitsi JWT]`, error);
+
     return res.status(500).json(InternalServerErrorHttpError);
   }
 });

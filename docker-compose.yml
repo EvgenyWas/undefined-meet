@@ -10,7 +10,7 @@ services:
       - WEB_PUBLIC_URL
       - SERVER_PORT
       - SERVER_URL
-      - SERVER_MORGAN_STREAM_PATH
+      - SERVER_LOG_DIR_PATH
       - SERVER_JWT_SECRET
       - SERVER_GITHUB_WHITELIST_PATH
       - GITHUB_CLIENT_ID
@@ -22,7 +22,7 @@ services:
       - '${SERVER_PORT}:${SERVER_PORT}'
     volumes:
       - /srv/undefined-meet/github-whitelist.txt:/app/github-whitelist.txt:ro
-      - /srv/undefined-meet/server.log:/app/server.log
+      - /srv/server/logs/:/app/${SERVER_LOG_DIR_PATH}
 
   # Jitsi whiteboard (excalidraw backend)
   whiteboard:

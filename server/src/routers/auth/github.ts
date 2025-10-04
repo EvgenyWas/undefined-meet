@@ -11,6 +11,7 @@ import {
   JWT_EXPIRES_IN,
   JWT_NAME,
 } from '@/constants';
+import { logger } from '@/logger';
 import type { IJwtPayload } from '@/types/IJwtPayload';
 import { getWebUrlWithNotification } from '@/utils';
 
@@ -45,12 +46,17 @@ authGithubRouter.get('/', async (_, res) => {
 authGithubRouter.get('/callback', async (req, res) => {
   const { code, state } = req.query;
   if (!code) {
+    logger.warn(
+      `${req.path}: '[User is redirected to the auth/github/callback endpoint without code]`,
+      { query: req.query },
+    );
+
     return res.redirect(
       getWebUrlWithNotification(NOTIFICATION_CODES.AuthGithubRetrieveError),
     );
   }
 
-  // Create Github access token and receive user data
+  // #1 Create Github access token and receive user data
   let user: TGithubUser;
   try {
     const { authentication: auth } = await octokitOAuthApp.createToken({
@@ -62,23 +68,46 @@ authGithubRouter.get('/callback', async (req, res) => {
     });
     user = response.data;
   } catch (error) {
+    logger.error(
+      `${req.path}: [Error with creating github access token and receiving user data]`,
+      error,
+    );
+
     return res.redirect(
       getWebUrlWithNotification(NOTIFICATION_CODES.AuthGithubRetrieveError),
     );
   }
 
+  // #2 Verify if this GitHub user is whitelisted
   try {
-    // Verify if this GitHub user is whitelisted
     const file = await fs.readFile(githubUsersWhitelistPath, 'utf8');
     const list = file.split('\n');
-    const isWhitelisted = list.some((username) => username === user.login);
+    const isWhitelisted = list.some(
+      (username) => username === user.login || username === user.email,
+    );
     if (!isWhitelisted) {
+      logger.info(`${req.path}: [User is not whitelisted]`, {
+        login: user.login,
+        email: user.email,
+      });
+
       return res.redirect(
         getWebUrlWithNotification(NOTIFICATION_CODES.AuthWhitelistingError),
       );
     }
+  } catch (error) {
+    logger.error(
+      `${req.path}: [Error with verifying user is whitelisted]`,
+      error,
+    );
 
-    // Generate JWT
+    return res.redirect(
+      getWebUrlWithNotification(NOTIFICATION_CODES.ServerError),
+    );
+  }
+
+  // #3 Generate JWT
+  try {
     const payload: IJwtPayload = {
       context: {
         user: {
@@ -101,11 +130,12 @@ authGithubRouter.get('/callback', async (req, res) => {
       sameSite: 'strict',
       maxAge: JWT_EXPIRES_IN,
     });
+
     return res.redirect(
       getWebUrlWithNotification(NOTIFICATION_CODES.AuthSuccess),
     );
   } catch (error) {
-    console.error(error);
+    logger.error(`${req.path}: [Error with generating user JWT]`, error);
     res.redirect(getWebUrlWithNotification(NOTIFICATION_CODES.ServerError));
   }
 });

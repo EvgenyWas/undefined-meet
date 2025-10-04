@@ -5,7 +5,8 @@ declare global {
       WEB_PUBLIC_URL: string;
       SERVER_PORT: string;
       SERVER_URL: string;
-      SERVER_MORGAN_STREAM_PATH: string;
+      SERVER_LOG_DIR_PATH: string;
+      SERVER_LOG_LEVEL: string;
       SERVER_JWT_SECRET: string;
       SERVER_GITHUB_WHITELIST_PATH: string;
       GITHUB_CLIENT_ID: string;
