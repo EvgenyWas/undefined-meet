@@ -88,7 +88,7 @@ authGithubRouter.get('/callback', async (req, res) => {
     if (!isWhitelisted) {
       logger.info(`${req.path}: [User is not whitelisted]`, {
         login: user.login,
-        email: user.email,
+        name: user.name,
       });
 
       return res.redirect(
@@ -130,6 +130,8 @@ authGithubRouter.get('/callback', async (req, res) => {
       sameSite: 'strict',
       maxAge: JWT_EXPIRES_IN,
     });
+
+    logger.info(`✅ User ${user.name} signed in with GitHub successfully`);
 
     return res.redirect(
       getWebUrlWithNotification(NOTIFICATION_CODES.AuthSuccess),
