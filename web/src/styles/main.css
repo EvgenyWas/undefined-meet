@@ -18,9 +18,17 @@ body {
   padding: 0;
 }
 
+/* Jitsi container iframe overrides */
 div[id^='jitsiMeeting'] {
   height: 100%;
   margin: 0;
   padding: 0;
+  overflow: hidden;
+}
+
+/* Buy me a coffee widget overrides */
+#bmc-wbtn {
+  width: 40px !important;
+  height: 40px !important;
   overflow: hidden;
 }
