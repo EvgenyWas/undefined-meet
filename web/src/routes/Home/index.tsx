@@ -6,10 +6,12 @@ import Toastify from 'toastify-js';
 import GithubIcon from '@/assets/github.svg?react';
 import TypingOutText from '@/components/TypingOutText';
 import { apiEndpoints, asciiLogo, manifestItems } from '@/constants';
+import { useBuyMeACoffeeWidget } from '@/hooks/useBuymeacoffee';
 import type { IApiError } from '@/types/IApiError';
 import type { IWhoAmIData } from '@/types/IWhoAmIData';
-import styles from './Home.module.css';
 import { mapNotificationToMessage } from '@/utils';
+
+import styles from './Home.module.css';
 
 const githubAuthHref = `${import.meta.env.WEB_AUTH_URL}/github`;
 
@@ -19,6 +21,8 @@ export const Home = () => {
   const { data, error, isLoading } = useSWRImmutable<IWhoAmIData, IApiError>(
     apiEndpoints.whoAmI,
   );
+
+  const hasMeetingButton = data && !error;
 
   const toastInstance = useMemo(
     () =>
@@ -33,6 +37,8 @@ export const Home = () => {
       }),
     [],
   );
+
+  useBuyMeACoffeeWidget();
 
   useEffect(() => {
     const code = searchParams.get('notification');
@@ -52,8 +58,6 @@ export const Home = () => {
     searchParams.delete('notification');
     setSearchParams(searchParams, { replace: true });
   }, [searchParams, toastInstance]);
-
-  const hasMeetingButton = data && !error;
 
   return (
     <div className={styles.wrapper}>
