@@ -3,17 +3,15 @@ import { useNavigate, useSearchParams } from 'react-router';
 import useSWRImmutable from 'swr/immutable';
 import Toastify from 'toastify-js';
 
-import GithubIcon from '@/assets/github.svg?react';
 import TypingOutText from '@/components/TypingOutText';
 import { apiEndpoints, asciiLogo, manifestItems } from '@/constants';
 import { useBuyMeACoffeeWidget } from '@/hooks/useBuymeacoffee';
 import type { IApiError } from '@/types/IApiError';
 import type { IWhoAmIData } from '@/types/IWhoAmIData';
 import { mapNotificationToMessage } from '@/utils';
+import SsoLinks from '@/components/SsoLinks';
 
 import styles from './Home.module.css';
-
-const githubAuthHref = `${import.meta.env.WEB_AUTH_URL}/github`;
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -73,10 +71,7 @@ export const Home = () => {
         {isLoading ? null : hasMeetingButton ? (
           <button onClick={() => navigate('/room')}>Join meeting</button>
         ) : (
-          <a href={githubAuthHref} className={styles.signInLink}>
-            Sign in
-            <GithubIcon height={20} />
-          </a>
+          <SsoLinks />
         )}
       </main>
 

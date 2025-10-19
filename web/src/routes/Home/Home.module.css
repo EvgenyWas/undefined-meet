@@ -10,14 +10,6 @@
   font-size: 0.9vw !important;
 }
 
-.signInLink {
-  display: flex;
-  justify-items: center;
-  align-items: center;
-  gap: 10px;
-  width: fit-content;
-}
-
 .footer {
   position: fixed;
   bottom: 0;
