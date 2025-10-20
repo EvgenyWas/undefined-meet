@@ -59,7 +59,7 @@ export const Home = () => {
 
   return (
     <div className={styles.wrapper}>
-      <main>
+      <main className={styles.main}>
         <TypingOutText as="pre" text={asciiLogo} className={styles.logo} />
 
         <ul>
