@@ -12,11 +12,21 @@ const SsoLinks = () => {
   return (
     <div className={styles.links}>
       Sign In with
-      <a href={githubAuthHref} aria-label="Github SSO" className={styles.link}>
+      <a
+        href={githubAuthHref}
+        aria-label="Github SSO"
+        title="Github SSO"
+        className={styles.link}
+      >
         <GithubIcon />
       </a>
       or
-      <a href={googleAuthHref} aria-label="Google SSO" className={styles.link}>
+      <a
+        href={googleAuthHref}
+        aria-label="Google SSO"
+        title="Google SSO"
+        className={styles.link}
+      >
         <GoogleIcon />
       </a>
     </div>
