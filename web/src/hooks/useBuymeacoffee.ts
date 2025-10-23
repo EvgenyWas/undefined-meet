@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-// --- Hardcoded attributes for BMC ---
+// --- Attributes for BMC ---
 const attrs = {
   name: 'BMC-Widget',
   cfasync: 'false',
@@ -10,7 +10,6 @@ const attrs = {
   position: 'Right',
   x_margin: '24',
   y_margin: '18',
-  message: 'Support me on Buy me a coffee :)',
 };
 
 export function useBuyMeACoffeeWidget() {
@@ -135,61 +134,10 @@ export function useBuyMeACoffeeWidget() {
     iframe.style.transform = 'scale(0)';
     (iframe.style as any).userSelect = 'none';
 
-    // === Tooltip message === (o)
-    const msg = document.createElement('div');
-    msg.style.position = 'fixed';
-    msg.style.right = `${parseInt(attrs.x_margin, 10) + 84}px`;
-    msg.style.bottom = `${parseInt(attrs.y_margin, 10) - 2}px`;
-    msg.style.transformOrigin = 'right bottom';
-    msg.style.transform = 'scale(0.7)';
-    msg.style.opacity = '0';
-    msg.style.transition = '.25s ease all';
-    msg.style.visibility = 'hidden';
-    msg.style.background = '#ffffff';
-    msg.style.zIndex = '9999';
-    msg.innerText = attrs.message;
-    msg.style.boxShadow =
-      '0px 2px 5px rgba(0, 0, 0, 0.05), 0px 8px 40px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.15)';
-    msg.style.padding = '16px 16px';
-    msg.style.borderRadius = '4px';
-    msg.style.fontSize = '18px';
-    msg.style.color = '#0D0C22';
-    msg.style.width = 'auto';
-    msg.style.maxWidth = '260px';
-    msg.style.lineHeight = '1.5';
-    msg.style.fontFamily = '"Avenir Book", sans-serif';
-
     // Append (order mirrors original)
     document.body.appendChild(overlay);
     overlay.appendChild(iframe);
     document.body.appendChild(btn);
-    document.body.appendChild(msg);
-
-    // Tooltip show/hide (cookie “visited” for 1 day, mirrors original)
-    const cookie = document.cookie;
-    const dayLater = new Date();
-    dayLater.setTime(dayLater.getTime() + 86400000);
-    const cookieSuffix = '; expires=' + dayLater.toString();
-    if (cookie.includes('visited') || attrs.message === '') {
-      msg.style.transform = 'scale(0.7)';
-      msg.style.opacity = '0';
-      msg.style.visibility = 'hidden';
-    } else {
-      document.cookie = `visited=1${cookieSuffix};path=/`;
-      setTimeout(() => {
-        msg.style.opacity = '1';
-        msg.style.visibility = 'visible';
-        msg.style.transform = 'scale(1)';
-        msg.style.transition = '.25s ease all';
-      }, 500);
-      setTimeout(() => {
-        msg.style.transformOrigin = 'right bottom';
-        msg.style.transform = 'scale(0.7)';
-        msg.style.opacity = '0';
-        msg.style.transition = '.25s ease all';
-        msg.style.visibility = 'hidden';
-      }, 5000);
-    }
 
     // Interactions
     let clicks = 0;
@@ -203,12 +151,8 @@ export function useBuyMeACoffeeWidget() {
           '&color=' +
           encodeURIComponent(attrs.color);
       }
+
       clicks++;
-      // hide tooltip
-      msg.style.transform = 'scale(0.7)';
-      msg.style.opacity = '0';
-      msg.style.transition = '.25s ease all';
-      msg.style.visibility = 'hidden';
 
       // expand overlay to full screen
       overlay.style.width = '100%';
@@ -241,10 +185,6 @@ export function useBuyMeACoffeeWidget() {
       btn.style.transition = '.25s ease all';
     };
     btn.onmouseleave = function () {
-      msg.style.transform = 'scale(0.7)';
-      msg.style.opacity = '0';
-      msg.style.transition = '.25s ease all';
-      msg.style.visibility = 'hidden';
       btn.style.transform = 'scale(1)';
       btn.style.transition = '.25s ease all';
     };
@@ -252,7 +192,6 @@ export function useBuyMeACoffeeWidget() {
       btn.style.transform = 'scale(0.90)';
       btn.style.transition = '.25s ease all';
     };
-
     overlay.onmouseover = function () {
       overlay.style.cursor = 'pointer';
       btn.style.transform = 'scale(1)';
@@ -276,6 +215,7 @@ export function useBuyMeACoffeeWidget() {
         closeBtn.style.visibility = 'hidden';
         setTimeout(function () {}, 100);
       }
+
       // restore cup icon
       btn.innerHTML =
         '<img src="https://cdn.buymeacoffee.com/widget/assets/coffee%20cup.svg" alt="Buy Me A Coffee" style="height: 36px; width: 36px; margin: 0; padding: 0;">';
@@ -291,7 +231,6 @@ export function useBuyMeACoffeeWidget() {
       try {
         btn.remove();
         overlay.remove();
-        msg.remove();
       } catch {}
     };
   }, []);
