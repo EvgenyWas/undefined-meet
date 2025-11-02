@@ -58,7 +58,7 @@ export const jitsiConfig = {
     hideJoinRoomButton: true,
   },
   disableModeratorIndicator: true,
-  startWithAudioMuted: true,
+  startWithAudioMuted: false,
   participantsPane: {
     hideModeratorSettingsTab: true,
   },
